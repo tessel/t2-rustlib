@@ -79,6 +79,7 @@ cd $RUST_TREE
 git checkout $RUST_GIT_VERSION || (git fetch; git checkout $RUST_GIT_VERSION)
 git submodule update --init
 
+sed -i 's/-m32//g' $RUST_TREE/src/compiler-rt/make/platform/multi_arch.mk
 
 # Build compiler-rt
 
