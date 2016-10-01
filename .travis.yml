@@ -1,0 +1,18 @@
+cache: t2-sdk
+
+script:
+- |
+  if [ -d t2-sdk ]; then
+    wget https://s3.amazonaws.com/builds.tessel.io/t2/OpenWRT+SDK/OpenWrt-SDK-ramips-mt7620_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2
+    tar xf OpenWrt-SDK-ramips-mt7620_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2
+    mv OpenWrt-SDK-ramips-mt7620_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64 t2-sdk
+  fi
+- export STAGING_DIR=$PWD/t2-sdk/staging_dir
+- export PATH=$STAGING_DIR/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/bin/:$PATH
+
+- git clone https://github.com/rust-lang/rust
+- wget https://static.rust-lang.org/dist/rust-1.12.0-x86_64-unknown-linux-gnu.tar.gz
+- tar xf rust-1.10.0-x86_64-unknown-linux-gnu.tar.gz
+- rust-1.10.0-x86_64-unknown-linux-gnu/install.sh --prefix=$PWD/rust-root
+
+- ./rust-cross-libs.sh --rust-prefix=$PWD/rust-root --rust-git=rust --target-json=tessel2.json

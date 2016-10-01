@@ -1,0 +1,24 @@
+{
+    "arch": "mips",
+    "cpu": "mips32r2",
+    "data-layout": "e-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64",
+    "llvm-target": "mipsel-unknown-linux-uclibc",
+    "target-env": "uclibc",
+    "features": "+mips32,+soft-float",
+    "os": "linux",
+    "vendor": "openwrt",
+    "relocation-model": "pic",
+    "target-endian": "little",
+    "target-pointer-width": "32",
+    "exe-allocation-crate": "alloc_system",
+    "lib-allocation-crate": "alloc_system",
+    "linker": "mipsel-openwrt-linux-gcc",
+    "ar": "mipsel-openwrt-linux-ar",
+    "dynamic-linking": true,
+    "executables": true,
+
+    "c-compiler": "mipsel-openwrt-linux-gcc",
+    "c-flags": "-Wall -g -fPIC -mips32 -mabi=32 -O2",
+    "c-link-flags": "-shared -fPIC -g -mips32",
+    "c-triple": "mipsel-openwrt-linux"
+}
