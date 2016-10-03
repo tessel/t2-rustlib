@@ -7,7 +7,7 @@ addons:
   apt:
     packages:
       - realpath
-      - tree
+      - coreutils
 
 script:
   - pip install --user awscli --ignore-installed six
