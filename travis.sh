@@ -2,11 +2,6 @@
 
 set -e
 
-# Upload tessel2.json
-sha256sum tessel2.json > tessel2.json.sha256
-aws s3 cp tessel2.json s3://builds.tessel.io/t2/sdk/tessel2.json --acl public-read || true
-aws s3 cp tessel2.json.sha256 s3://builds.tessel.io/t2/sdk/tessel2.json.sha256 --acl public-read || true
-
 if [ ! -d t2-sdk ]; then
   curl -LO https://s3.amazonaws.com/builds.tessel.io/t2/OpenWRT+SDK/OpenWrt-SDK-ramips-mt7620_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2
   tar xf OpenWrt-SDK-ramips-mt7620_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2
@@ -25,8 +20,12 @@ rust-$RUST_VERSION-x86_64-unknown-linux-gnu/install.sh --prefix=$PWD/rust-root
 
 ./rust-cross-libs.sh --rust-prefix=$PWD/rust-root --rust-git=rust --target-json=tessel2.json
 
+# Copy in tessel2.json
+cp tessel2.json /home/travis/build/tessel/t2-rustlib/rust-root/lib/rustlib/tessel2/lib
+
 tar -cvzf t2-rustlib-$RUST_VERSION.tar.gz -C /home/travis/build/tessel/t2-rustlib/rust-root/lib/rustlib/tessel2/lib .
 sha256sum t2-rustlib-$RUST_VERSION.tar.gz > t2-rustlib-$RUST_VERSION.tar.gz.sha256
 
+# Upload
 aws s3 cp t2-rustlib-$RUST_VERSION.tar.gz s3://builds.tessel.io/t2/sdk/t2-rustlib-$RUST_VERSION.tar.gz --acl public-read
 aws s3 cp t2-rustlib-$RUST_VERSION.tar.gz.sha256 s3://builds.tessel.io/t2/sdk/t2-rustlib-$RUST_VERSION.tar.gz.sha256 --acl public-read
