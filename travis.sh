@@ -2,6 +2,8 @@
 
 set -e
 
+aws configure set preview.cloudfront true
+
 if [ ! -d t2-sdk ]; then
   curl -LO https://s3.amazonaws.com/builds.tessel.io/t2/OpenWRT+SDK/OpenWrt-SDK-ramips-mt7620_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2
   tar xf OpenWrt-SDK-ramips-mt7620_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2
@@ -29,3 +31,4 @@ sha256sum t2-rustlib-$RUST_VERSION.tar.gz > t2-rustlib-$RUST_VERSION.tar.gz.sha2
 # Upload
 aws s3 cp t2-rustlib-$RUST_VERSION.tar.gz s3://builds.tessel.io/t2/sdk/t2-rustlib-$RUST_VERSION.tar.gz --acl public-read
 aws s3 cp t2-rustlib-$RUST_VERSION.tar.gz.sha256 s3://builds.tessel.io/t2/sdk/t2-rustlib-$RUST_VERSION.tar.gz.sha256 --acl public-read
+aws cloudfront create-invalidation --distribution-id E2XP6XTWMS3FI8 --paths /t2/sdk/t2-rustlib-$RUST_VERSION.tar.gz /t2/sdk/t2-rustlib-$RUST_VERSION.tar.gz.sha256
