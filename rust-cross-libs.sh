@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# THIS IS A GIANT HACK
-# if you think this would be a good idea if it weren't so terrible, go read https://github.com/rust-lang/rfcs/pull/1133
+# Adapted from proof-of-concept by Kevin Mehall
+# https://gist.github.com/kevinmehall/16e8b3ea7266b048369d
+
+# NOTE: THIS IS A GIANT HACK.
+# If you think this would be a good idea if it weren't so terrible,
+# go read https://github.com/rust-lang/rfcs/pull/1133
 
 set -e
 
